@@ -10,11 +10,4 @@ import image from "@astrojs/image";
 export default defineConfig({
     site: 'https://cchaniotaki.github.io',
     base: '/cchaniotaki.github.io',
-    integrations: [mdx(), sitemap(), tailwind(), image(
-        {
-            serviceEntryPoint: '@astrojs/image/sharp',
-            cacheDir: "./.cache/image",
-            logLevel: 'debug',
-        }
-    )]
 });
