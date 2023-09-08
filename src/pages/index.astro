@@ -1,7 +1,7 @@
 ---
 import BaseLayout from "../layouts/BaseLayout.astro";
 import HorizontalCard from "../components/HorizontalCard.astro";
-import { getCollection } from "astro:content";
+import {getCollection} from "astro:content";
 
 const posts = (await getCollection("blog")).sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
 
@@ -9,69 +9,63 @@ const last_posts = posts.slice(0, 3);
 ---
 
 <BaseLayout sideBarActiveItemID="home">
-  <div class="pb-12 mt-5">
-    <div class="text-xl py-1">Hey there 👋</div>
-    <div class="text-5xl font-bold">I'm Manuel Ernesto</div>
-    <div class="text-3xl py-3 font-bold">Software Engineer and Entrepreneur</div>
-    <div class="py-2">
-      <text class="text-lg">
-        This is <b>Astrofy</b> a free and open-source template for your Personal Portfolio Website built with Astro and TailwindCSS.
-        Create in minutes a website with Blog, CV, Project Section, Store and RSS Feed. I hope you find
-        it useful!
-      </text>
+    <div class="pb-12 mt-5">
+        <!--<div class="text-xl py-1">Hello! Welcome to my personal site! 👋</div>-->
+        <div class="text-5xl font-bold">Christina Chaniotaki</div>
+        <!--<div class="text-2xl py-3 font-bold">Ph.D. Student in Computer Science at <a href="https://www.usc.edu/">University of Southern California</a></div>-->
+        <div class="py-2 pt-4">
+            <text class="text-lg text-justify">
+                Currently, I am a Ph.D. Student in <a href="https://www.cs.usc.edu/" class="text-blue-500">Computer
+                Science</a>
+                at <a href="https://www.usc.edu/" class="text-blue-500">University of Southern California (USC)</a>,
+                supervised by Prof. <a href="https://viterbi-web.usc.edu/~halfond/" class="text-blue-500">William G.J.
+                Halfond</a>.
+                I received my bachelor's degree in 2018 from the
+                <a href="https://www.dept.aueb.gr/en/dmst" class="text-blue-500">Department of Management Science and
+                    Technology</a>
+                at <a href="https://www.aueb.gr/en" class="text-blue-500">Athens University of Economics and
+                Business</a> in Greece.
+                In 2021, I finished a master's degree in
+                <a href="https://mscis.cs.aueb.gr/en/normal/home" class="text-blue-500">Information Systems</a>
+                at the same University.
+                During my studies, I started working in the industry as a Software Engineer.
+                My latest job position was Senior Software Engineer at the
+                <a href="https://www.eba.europa.eu/" class="text-blue-500">European Banking Authority (EBA)</a>, located
+                in Paris, France.
+
+            </text>
+          <br><br>
+            <text class="text-lg">
+                My research interests are in the areas of <b>Software Engineering</b>, <b>Software Testing</b>, and <b>Web Services</b>.
+            </text>
+        </div>
     </div>
-    <div class="mt-8">
-      <a class="btn" href="https://twitter.com/manuelernestog" target="_blank"> Let's connect!</a>
-      <a href="https://github.com/manuelernestog/astrofy" target="_blank" class="btn btn-outline ml-5">
-        Get This template
-      </a>
+
+    <div>
+        <div class="text-3xl w-full font-bold mb-2">News!</div>
     </div>
-  </div>
 
-  <div>
-    <div class="text-3xl w-full font-bold mb-2">My last projects {"</>"}</div>
-  </div>
+  <table class="table-auto">
+    <tbody>
+    <tr>
+      <th class="pr-5">August 2023: </th>
+      <td>I moved to Los Angeles to start my Ph.D. studies at USC.</td>
+    </tr>
+    <tr>
+      <th class="pr-5">March 2023: </th>
+      <td>I started working on European Banking Authority (EBA).</td>
+    </tr>
+    <tr>
+      <th class="pr-5">June 2022: </th>
+      <td>I became a Team Leader - Senior Software Engineer at UBITECH LTD.</td>
+    </tr>
+    <tr>
+      <th class="pr-5">December 2021: </th>
+      <td>I defended my master's thesis.</td>
+    </tr>
+    </tbody>
+  </table>
 
-  <HorizontalCard
-    title="Demo Project 1"
-    img="/post_img.webp"
-    desc="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
-    url="#"
-    badge="NEW"
-  />
-  <div class="divider my-0"></div>
-  <HorizontalCard
-    title="Demo Project 2"
-    img="/post_img.webp"
-    desc="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
-    url="#"
-  />
-  <div class="divider my-0"></div>
-  <HorizontalCard
-    title="Demo Project 3"
-    img="/post_img.webp"
-    desc="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
-    url="#"
-    badge="FOSS"
-  />
 
-  <div>
-    <div class="text-3xl w-full font-bold mb-5 mt-10">Latest from blog</div>
-  </div>
 
-  {
-    last_posts.map((post) => (
-      <>
-        <HorizontalCard
-          title={post.data.title}
-          img={post.data.heroImage}
-          desc={post.data.description}
-          url={"/blog/" + post.slug}
-          target="_self"
-          badge={post.data.badge}
-        />
-        <div class="divider my-0" />
-      </>
-    ))
-  }
 </BaseLayout>
