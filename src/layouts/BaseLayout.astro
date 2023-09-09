@@ -19,6 +19,7 @@ const { image, title = SITE_TITLE, description = SITE_DESCRIPTION, includeSideba
       <input id="my-drawer" type="checkbox" class="drawer-toggle" />
       <div class="drawer-content bg-base-100">
         <Header title={SITE_TITLE} />
+        <p class="h-64 bg-[url('/cover-photo.png')] bg-no-repeat bg-cover bg-center">
         <div class="md:flex md:justify-center">
           <main class="p-6 pt-10 lg:max-w-[900px] max-w-[100vw]">
             <slot />
@@ -27,6 +28,6 @@ const { image, title = SITE_TITLE, description = SITE_DESCRIPTION, includeSideba
         <Footer />
       </div>
       {includeSidebar && <SideBar sideBarActiveItemID={sideBarActiveItemID} />}
-    </div>
+    </p>
   </body>
 </html>

@@ -4,6 +4,11 @@ module.exports = {
 	theme: {
 		extend: {},
 	},
+	extend: {
+		backgroundImage: {
+			'cover-page': "url('/cover-photo.png')",
+		}
+	},
 	plugins: [require("@tailwindcss/typography"),require("daisyui")],
 	daisyui: {
 		themes: true, // true: all themes | false: only light + dark | array: specific themes like this ["light", "dark", "cupcake"]
