@@ -11,7 +11,7 @@ const {title, university, subtitle} = Astro.props;
         <h3 class="font-semibold mb-1 justify-between">{university},
             <span class="font-light text-sm">(<i>{subtitle}</i>).</span>
         </h3>
-        <span class="font-light">{title}</span>
+        <span class="font-light" set:html={title}></span>
 
         <p class="my-2 text-sm text-justify">
             <slot/>
