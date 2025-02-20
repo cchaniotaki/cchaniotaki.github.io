@@ -14,7 +14,7 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout your repository using git
+      - name: Checkout repository
         uses: actions/checkout@v4
 
       - name: Set up Node.js
@@ -28,6 +28,9 @@ jobs:
 
       - name: Build Astro site
         run: npm run build
+
+      - name: Verify Astro build output
+        run: ls -la dist/
 
       - name: Upload artifact
         uses: actions/upload-artifact@v4
@@ -48,6 +51,11 @@ jobs:
           name: astro-build
           path: dist/
 
+      - name: Verify downloaded artifact
+        run: ls -la dist/
+
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v1
+        with:
+          artifact_path: dist/
