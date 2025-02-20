@@ -14,24 +14,29 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      # 1. Check out code
-      - uses: actions/checkout@v4
+      - name: Check out code
+        uses: actions/checkout@v4
 
-      # 2. (Optional) If you use PNPM or Yarn, set it up
-      - uses: pnpm/action-setup@v2
+      # (Optional) If you use pnpm or yarn, set them up:
+      # - uses: pnpm/action-setup@v2
+      #   with:
+      #     version: 8
+      # Then replace npm below with pnpm or yarn accordingly
+
+      - name: Set up Node
+        uses: actions/setup-node@v4
         with:
-          version: 8
-      # Or if you use npm, or Yarn, adjust accordingly
+          node-version: 18
 
-      # 3. Install dependencies & build
-      - run: pnpm install
-      - run: pnpm run build
+      - run: npm install
+      - run: npm run build
 
-      # 4. Upload artifact (use upload-pages-artifact@v2, not upload-artifact@v3!)
+      # IMPORTANT: Directly use 'actions/upload-artifact@v4'
       - name: Upload built site
-        uses: actions/upload-pages-artifact@v2
+        uses: actions/upload-artifact@v4
         with:
-          path: ./dist  # adjust if your output folder is named differently
+          name: pages-artifact
+          path: ./dist  # or wherever your built files are
 
   deploy:
     needs: build
@@ -43,3 +48,5 @@ jobs:
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4
+        with:
+          artifact_name: pages-artifact
