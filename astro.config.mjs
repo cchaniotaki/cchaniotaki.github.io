@@ -9,7 +9,7 @@ import image from "@astrojs/image";
 
 // https://astro.build/config
 export default defineConfig({
-    site: 'https://cchaniotaki.github.io',
+    site: 'https://cchaniotaki.github.io/cchaniotaki.github.io/',
     base: '/cchaniotaki.github.io/',
     integrations: [mdx(), sitemap(), tailwind(), image(
         {
