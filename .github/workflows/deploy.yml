@@ -38,8 +38,13 @@ jobs:
       - name: Upload GitHub Pages artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          name: github-pages
+          name: github-pages  # Ensures the artifact has a consistent name
           path: dist/
+
+      - name: Debug Uploaded Artifacts
+        run: |
+          echo "Listing uploaded artifacts..."
+          ls -la dist/
 
   deploy:
     needs: build
@@ -52,4 +57,4 @@ jobs:
         id: deployment
         uses: actions/deploy-pages@v2
         with:
-          artifact_name: github-pages
+          artifact_name: github-pages  # Explicitly reference the uploaded artifact
