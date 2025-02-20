@@ -5,6 +5,7 @@ on:
     branches: ["main"]
   workflow_dispatch:
 
+# IMPORTANT: Required for Pages deployments
 permissions:
   contents: read
   pages: write
@@ -29,15 +30,14 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: pages-artifact
-          path: ./dist  # or wherever your built files are
+          path: ./dist
 
   deploy:
     needs: build
     runs-on: ubuntu-latest
-    # IMPORTANT: You must have this environment block
     environment:
       name: github-pages
-
+      url: ${{ steps.deployment.outputs.page_url }}
     steps:
       - name: Deploy to GitHub Pages
         uses: actions/deploy-pages@v4
