@@ -17,14 +17,20 @@ jobs:
       - name: Checkout your repository using git
         uses: actions/checkout@v4
 
-      - name: Install, build, and upload your site
-        uses: withastro/action@v0  # Ensure you're using the latest version
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
         with:
-          node-version: 18 # Use the latest supported Node.js version
-          package-manager: npm # Change this if you're using yarn/pnpm
+          node-version: 18
+          cache: npm # Change to 'yarn' or 'pnpm' if needed
+
+      - name: Install dependencies
+        run: npm install # Change to 'yarn install' or 'pnpm install' if needed
+
+      - name: Build Astro site
+        run: npm run build
 
       - name: Upload artifact
-        uses: actions/upload-artifact@v4 # Updated from v3 to v4
+        uses: actions/upload-artifact@v4
         with:
           name: astro-build
           path: dist/
@@ -37,7 +43,7 @@ jobs:
       url: ${{ steps.deployment.outputs.page_url }}
     steps:
       - name: Download artifact
-        uses: actions/download-artifact@v4 # Updated to latest version
+        uses: actions/download-artifact@v4
         with:
           name: astro-build
           path: dist/
