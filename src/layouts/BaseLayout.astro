@@ -1,33 +1,27 @@
 ---
 import BaseHead from "../components/BaseHead.astro";
-import Header from "../components/Header.astro";
 import Footer from "../components/Footer.astro";
-import SideBar from "../components/SideBar.astro";
-
+import SideBarFooter from "../components/SideBarFooter.astro";
 import { SITE_TITLE, SITE_DESCRIPTION } from "../config";
-
-const { image, title = SITE_TITLE, description = SITE_DESCRIPTION, includeSidebar = true, sideBarActiveItemID } = Astro.props;
+const { image, title = SITE_TITLE, description = SITE_DESCRIPTION, sideBarActiveItemID } = Astro.props;
+const links = [['home','/','About'],['projects','/projects','Work Projects'],['research','/research','Research Projects'],['teaching','/teaching','Teaching Experience'],['cv','/cv','Curriculum Vitae (CV)'],['contact','/contact','Contact']];
 ---
-
 <!DOCTYPE html>
-<html lang="en" data-theme="pastel">
-  <head>
-    <BaseHead title={title} description={description} image={image} />
-  </head>
+<html lang="en" data-theme="light">
+  <head><BaseHead title={title} description={description} image={image} /></head>
   <body>
-    <div class="bg-base-100 drawer lg:drawer-open">
-      <input id="my-drawer" type="checkbox" class="drawer-toggle" />
-      <div class="drawer-content bg-base-100">
-        <Header title={SITE_TITLE} />
-        <p class="h-28 bg-[url('/cover-photo.png')] bg-no-repeat bg-cover bg-center">
-        <div class="md:flex md:justify-center">
-          <main class="p-6 pt-10 lg:max-w-[900px] max-w-[100vw]">
-            <slot />
-          </main>
-        </div>
-        <Footer />
-      </div>
-      {includeSidebar && <SideBar sideBarActiveItemID={sideBarActiveItemID} />}
-    </p>
+    <div class="space-backdrop" aria-hidden="true"><span class="space-orbit"></span></div>
+    <a class="skip-link" href="#main">Skip to content</a>
+    <div class="site-shell">
+      <aside class="profile-panel">
+        <a href="/" class="portrait-link"><img src="/profile.png" alt="Christina Chaniotaki" width="176" height="176" /></a>
+        <div class="profile-name">Christina Chaniotaki</div>
+        <div class="profile-quotes"><i>"Αγωνίσου για την ζωή που ονειρεύεσαι"</i><br /><i>"Strive for the life you dream of"</i></div>
+        <nav aria-label="Main navigation">{links.map(([id,href,label]) => <a href={href} aria-current={id === sideBarActiveItemID ? 'page' : undefined}><span>{label}</span><span aria-hidden="true">↗</span></a>)}</nav>
+        <SideBarFooter />
+      </aside>
+      <main id="main" class="page-content"><slot /></main>
+    </div>
+    <Footer />
   </body>
 </html>

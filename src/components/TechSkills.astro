@@ -1,0 +1,29 @@
+---
+interface Props { skills: string; }
+const { skills } = Astro.props;
+const icons: Record<string, string> = {
+  'TypeScript':'typescript', 'JavaScript':'javascript', 'Java':'java',
+  'Python':'python', 'Python (Programming Language)':'python', 'React':'react',
+  'Next.js':'nextjs', 'Node.js':'nodejs', 'Fastify':'fastify', 'PostgreSQL':'postgresql',
+  'Prisma':'prisma', 'Docker':'docker', 'Cloudflare':'cloudflare', 'Quarkus':'quarkus',
+  'Figma (Software)':'figma', 'Vue.js':'vuejs', 'Angular':'angular',
+  'Elasticsearch':'elasticsearch', 'MongoDB':'mongodb', 'CSS':'css3', 'HTML5':'html5',
+  'Spring Boot':'spring', 'Ionic Framework':'ionic', 'Electron.js':'electron',
+  'WordPress':'wordpress', 'MySQL':'mysql'
+};
+---
+<ul class="tech-skills" aria-label="Technologies and skills">
+  {skills.split('·').map(value => value.trim()).filter(Boolean).map(skill => (
+    <li class:list={['tech-skill', { 'tech-logo': icons[skill] }]} title={skill}>
+      {icons[skill] ? <><img src={`/icons/${icons[skill]}.svg`} alt={skill} width="25" height="25" loading="lazy" /><span class="tech-tooltip" aria-hidden="true">{skill}</span></> : <span>{skill}</span>}
+    </li>
+  ))}
+</ul>
+<style>
+.tech-skills { display:flex; flex-wrap:wrap; align-items:center; gap:9px; margin:16px 0 0; padding:0; list-style:none; }
+.tech-skill { position:relative; display:flex; align-items:center; justify-content:center; min-height:36px; padding:4px 9px; border:1px solid var(--line); border-radius:7px; font-size:11px; line-height:1.5; color:var(--muted); background:var(--paper); }
+.tech-logo { width:38px; padding:6px; background:transparent; border-color:var(--line); }
+.tech-logo img { display:block; width:25px; height:25px; object-fit:contain; }
+.tech-tooltip { display:none; position:absolute; bottom:calc(100% + 7px); left:50%; transform:translateX(-50%); background:var(--ink); color:var(--paper); padding:4px 8px; border-radius:4px; white-space:nowrap; z-index:2; pointer-events:none; }
+.tech-logo:hover .tech-tooltip { display:block; }
+</style>

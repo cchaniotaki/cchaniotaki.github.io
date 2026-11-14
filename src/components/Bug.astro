@@ -1,0 +1,40 @@
+<button class="bug-toggle" type="button" aria-pressed="false" aria-controls="little-bug"><span aria-hidden="true">✳</span> <span class="bug-label">Release a bug</span></button>
+<div id="little-bug" class="little-bug" hidden aria-hidden="true">
+  <svg viewBox="0 0 64 72" width="42" height="48" fill="none">
+    <g class="bug-legs" stroke="var(--ink)" stroke-width="3" stroke-linecap="round"><path d="M19 32 9 26M18 43 6 44M20 53 10 62M45 32 55 26M46 43 58 44M44 53 54 62" /></g>
+    <g class="bug-antennae" stroke="var(--ink)" stroke-width="2.5" stroke-linecap="round"><path d="M27 20 22 8M37 20 42 8" /></g>
+    <ellipse cx="32" cy="25" rx="11" ry="12" fill="var(--ink)" /><ellipse cx="32" cy="44" rx="18" ry="23" fill="var(--accent)" stroke="var(--ink)" stroke-width="3" />
+    <path d="M32 24v42" stroke="var(--ink)" stroke-width="2" /><g fill="var(--ink)"><circle cx="23" cy="37" r="3"/><circle cx="41" cy="37" r="3"/><circle cx="23" cy="52" r="3"/><circle cx="41" cy="52" r="3"/></g><g fill="white"><circle cx="28" cy="21" r="2"/><circle cx="36" cy="21" r="2"/></g>
+  </svg>
+</div>
+<script>
+  const button = document.querySelector<HTMLButtonElement>('.bug-toggle')!;
+  const bug = document.querySelector<HTMLElement>('.little-bug')!;
+  const label = button.querySelector('.bug-label')!;
+  const reduced = window.matchMedia('(prefers-reduced-motion: reduce)');
+  let active = false, frame = 0, x = 0, y = 0, tx = 0, ty = 0, previous = 0;
+  function target(px: number, py: number) { tx = Math.max(8, Math.min(innerWidth - 50, px + 28)); ty = Math.max(8, Math.min(innerHeight - 56, py + 28)); }
+  function draw(time: number) {
+    if (!active || reduced.matches) return;
+    const amount = 1 - Math.exp(-Math.min(time - previous || 16, 64) / 130); previous = time;
+    const dx = tx - x, dy = ty - y; x += dx * amount; y += dy * amount;
+    bug.style.transform = `translate3d(${x}px, ${y}px, 0)`;
+    bug.classList.toggle('walking', Math.hypot(dx, dy) > 3);
+    frame = requestAnimationFrame(draw);
+  }
+  function toggle(value: boolean) {
+    active = value; cancelAnimationFrame(frame); previous = 0;
+    button.setAttribute('aria-pressed', String(active)); label.textContent = active ? 'Catch the bug' : 'Release a bug'; bug.hidden = !active;
+    if (active) {
+      const box = button.getBoundingClientRect(); target(box.left, box.bottom); x = tx; y = ty;
+      bug.style.transform = `translate3d(${x}px, ${y}px, 0)`;
+      if (!reduced.matches) frame = requestAnimationFrame(draw);
+    }
+  }
+  button.addEventListener('click', () => toggle(!active));
+  window.addEventListener('pointermove', event => { if (active && !reduced.matches) target(event.clientX, event.clientY); }, { passive: true });
+  window.addEventListener('pointerdown', event => { if (active && !reduced.matches) target(event.clientX, event.clientY); }, { passive: true });
+  window.addEventListener('keydown', event => { if (event.key === 'Escape') toggle(false); });
+  window.addEventListener('resize', () => { if (active) target(Math.min(tx - 28, innerWidth - 80), Math.min(ty - 28, innerHeight - 84)); });
+  reduced.addEventListener('change', () => toggle(active));
+</script>
