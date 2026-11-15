@@ -1,12 +1,19 @@
 ---
+import Bug from "./Bug.astro";
 const today = new Date();
+const { showBug = false } = Astro.props;
 ---
-
-<footer class="footer footer-center block mb-5 pt-10">
-  <div class="pb-2">
-    &copy; {today.getFullYear()} Christina Chaniotaki
-  </div>
+<footer class="footer site-footer">
+  <div class="footer-game">{showBug && <Bug />}</div>
+  <div class="footer-copyright">&copy; {today.getFullYear()} Christina Chaniotaki</div>
 </footer>
 <style>
-
+.site-footer { display:flex; align-items:center; justify-content:space-between; gap:24px; max-width:1240px; margin:0 auto 20px; padding:24px 36px; }
+.footer-game { display:block; }
+.site-footer .footer-copyright { display:block; text-align:right; align-self:center; margin:0; }
+@media(max-width:700px) {
+  .footer.site-footer { display:flex; flex-direction:row; flex-wrap:nowrap; justify-content:space-between; align-items:center; width:100%; gap:8px; padding:20px 12px; }
+  .site-footer .footer-game { display:block; flex:0 1 auto; min-width:0; }
+  .site-footer .footer-copyright { display:block; flex:0 0 auto; text-align:right; white-space:nowrap; font-size:10px; }
+}
 </style>

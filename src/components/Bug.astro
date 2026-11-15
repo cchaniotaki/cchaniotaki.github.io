@@ -1,40 +1,62 @@
-<button class="bug-toggle" type="button" aria-pressed="false" aria-controls="little-bug"><span aria-hidden="true">✳</span> <span class="bug-label">Release a bug</span></button>
-<div id="little-bug" class="little-bug" hidden aria-hidden="true">
+<div class="bug-game"><button class="bug-trap" type="button" aria-label="Catch the bug" aria-controls="little-bug" title="Catch the bug"><svg width="30" height="30" viewBox="0 0 32 32" fill="none" aria-hidden="true"><ellipse cx="18" cy="12" rx="9" ry="10" stroke="currentColor" stroke-width="1.5"/><path d="M12 5 23 19M9 11 26 11M12 19 23 5M14 21 7 30" stroke="currentColor" stroke-width="1.5"/></svg></button><span class="bug-status" role="status">Catch a bug</span></div>
+<button type="button" id="little-bug" class="little-bug" aria-label="Let the bug follow you">
   <svg viewBox="0 0 64 72" width="42" height="48" fill="none">
     <g class="bug-legs" stroke="var(--ink)" stroke-width="3" stroke-linecap="round"><path d="M19 32 9 26M18 43 6 44M20 53 10 62M45 32 55 26M46 43 58 44M44 53 54 62" /></g>
     <g class="bug-antennae" stroke="var(--ink)" stroke-width="2.5" stroke-linecap="round"><path d="M27 20 22 8M37 20 42 8" /></g>
     <ellipse cx="32" cy="25" rx="11" ry="12" fill="var(--ink)" /><ellipse cx="32" cy="44" rx="18" ry="23" fill="var(--accent)" stroke="var(--ink)" stroke-width="3" />
     <path d="M32 24v42" stroke="var(--ink)" stroke-width="2" /><g fill="var(--ink)"><circle cx="23" cy="37" r="3"/><circle cx="41" cy="37" r="3"/><circle cx="23" cy="52" r="3"/><circle cx="41" cy="52" r="3"/></g><g fill="white"><circle cx="28" cy="21" r="2"/><circle cx="36" cy="21" r="2"/></g>
   </svg>
-</div>
+</button>
 <script>
-  const button = document.querySelector<HTMLButtonElement>('.bug-toggle')!;
+  const trap = document.querySelector<HTMLButtonElement>('.bug-trap')!;
+  if (trap) {
   const bug = document.querySelector<HTMLElement>('.little-bug')!;
-  const label = button.querySelector('.bug-label')!;
-  const reduced = window.matchMedia('(prefers-reduced-motion: reduce)');
-  let active = false, frame = 0, x = 0, y = 0, tx = 0, ty = 0, previous = 0;
-  function target(px: number, py: number) { tx = Math.max(8, Math.min(innerWidth - 50, px + 28)); ty = Math.max(8, Math.min(innerHeight - 56, py + 28)); }
+  const status = document.querySelector<HTMLElement>('.bug-status')!;
+  const reduced = matchMedia('(prefers-reduced-motion: reduce)');
+  let active = false, frame = 0, x = innerWidth - 90, y = 90, tx = x, ty = y, previous = 0, luring = false;
+  function paint() { bug.style.transform = `translate3d(${x}px,${y}px,0)`; }
+  function catchBug() { bug.classList.remove('walking'); active = false; cancelAnimationFrame(frame); bug.hidden = true; trap.classList.add('caught'); trap.setAttribute('aria-label','Release the captured bug'); status.textContent = 'Release bug'; }
+  function lure() { if (!active) return; const r = trap.getBoundingClientRect(); tx = r.left + r.width / 2 - 21; ty = r.top + r.height / 2 - 24; luring = true; if (reduced.matches) catchBug(); }
   function draw(time: number) {
     if (!active || reduced.matches) return;
-    const amount = 1 - Math.exp(-Math.min(time - previous || 16, 64) / 130); previous = time;
-    const dx = tx - x, dy = ty - y; x += dx * amount; y += dy * amount;
-    bug.style.transform = `translate3d(${x}px, ${y}px, 0)`;
-    bug.classList.toggle('walking', Math.hypot(dx, dy) > 3);
+    const amount = 1 - Math.exp(-Math.min(time - previous || 16,64) / 150); previous = time;
+    const dx = tx-x, dy = ty-y; x += dx*amount; y += dy*amount; paint();
+    bug.classList.toggle('walking', Math.hypot(dx,dy)>3);
+    if (luring && Math.hypot(dx,dy)<9) { catchBug(); return; }
     frame = requestAnimationFrame(draw);
   }
-  function toggle(value: boolean) {
-    active = value; cancelAnimationFrame(frame); previous = 0;
-    button.setAttribute('aria-pressed', String(active)); label.textContent = active ? 'Catch the bug' : 'Release a bug'; bug.hidden = !active;
-    if (active) {
-      const box = button.getBoundingClientRect(); target(box.left, box.bottom); x = tx; y = ty;
-      bug.style.transform = `translate3d(${x}px, ${y}px, 0)`;
-      if (!reduced.matches) frame = requestAnimationFrame(draw);
-    }
+  const dock = document.querySelector<HTMLElement>('.bug-home') || document.querySelector<HTMLElement>('.page-content .text-3xl') || document.querySelector<HTMLElement>('.page-content')!;
+  function rest() {
+    active=false; cancelAnimationFrame(frame); bug.hidden=false; luring=false;
+    bug.classList.remove('following','walking'); bug.style.transform=''; dock.append(bug);
+    trap.classList.remove('caught'); trap.setAttribute('aria-label','Catch the bug'); status.textContent='Catch a bug';
   }
-  button.addEventListener('click', () => toggle(!active));
-  window.addEventListener('pointermove', event => { if (active && !reduced.matches) target(event.clientX, event.clientY); }, { passive: true });
-  window.addEventListener('pointerdown', event => { if (active && !reduced.matches) target(event.clientX, event.clientY); }, { passive: true });
-  window.addEventListener('keydown', event => { if (event.key === 'Escape') toggle(false); });
-  window.addEventListener('resize', () => { if (active) target(Math.min(tx - 28, innerWidth - 80), Math.min(ty - 28, innerHeight - 84)); });
-  reduced.addEventListener('change', () => toggle(active));
+  function follow() {
+    if(active || bug.hidden) return;
+    const r=bug.getBoundingClientRect(); x=r.left;y=r.top;tx=x;ty=y;previous=0;
+    document.body.append(bug);bug.classList.add('following');active=true;paint();
+    if(!reduced.matches)frame=requestAnimationFrame(draw);
+  }
+  bug.addEventListener('pointerenter',follow);
+  bug.addEventListener('click',follow);
+  function release() { rest(); }
+  trap.addEventListener('pointerenter',lure);
+  trap.addEventListener('click',()=> active ? catchBug() : release());
+  window.addEventListener('pointermove',e=> { if(!active || reduced.matches)return; const r=trap.getBoundingClientRect(); if(e.clientX>=r.left && e.clientX<=r.right && e.clientY>=r.top && e.clientY<=r.bottom) { lure(); return; } luring=false; tx=Math.max(8,Math.min(innerWidth-50,e.clientX+28)); ty=Math.max(8,Math.min(innerHeight-56,e.clientY+28)); },{passive:true});
+  window.addEventListener('keydown',e=>{if(e.key==='Escape')catchBug();});
+  window.addEventListener('scroll',()=>{if(luring && active)lure();},{passive:true});
+  reduced.addEventListener('change',()=>{cancelAnimationFrame(frame);if(active&&!reduced.matches){previous=0;frame=requestAnimationFrame(draw);}});
+  rest();
+}
 </script>
+<style>
+.bug-game { display:flex; align-items:center; gap:12px; }
+.bug-trap { display:grid; place-items:center; border:1px dashed var(--accent); border-radius:50%; color:var(--accent); background:#b8a1ef0a; cursor:pointer; }
+.bug-trap:hover { background:#b8a1ef20; }.bug-trap.caught { border-style:solid; background:#b8a1ef20; }
+.bug-status { font-size:12px; color:var(--muted); }
+@media(max-width:700px) { .bug-game { display:flex; flex-direction:row; flex-wrap:nowrap; gap:6px; }.bug-trap { width:32px; height:32px; flex-shrink:0; }.bug-status { white-space:nowrap; font-size:10px; } }
+
+.little-bug { position:relative; display:inline-flex; vertical-align:middle; width:42px; height:48px; padding:0; border:0; background:transparent; pointer-events:auto; cursor:pointer; transform:none; }
+.little-bug.following { position:fixed; left:0; top:0; pointer-events:none; }
+.little-bug[hidden] { display:none; }
+</style>

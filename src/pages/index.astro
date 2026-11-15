@@ -1,56 +1,23 @@
 ---
 import BaseLayout from "../layouts/BaseLayout.astro";
-import Bug from "../components/Bug.astro";
 import TimeLineElement from "../components/cv/TimeLine.astro";
 ---
 
 <BaseLayout sideBarActiveItemID="home">
-    <div class="pb-12 mt-5">
-        <!--<div class="text-xl py-1">Hello! Welcome to my personal site! 👋</div>-->
-        <div class="text-3xl font-bold">Christina Chaniotaki</div>
-        <!--<div class="text-2xl py-3 font-bold">Ph.D. Student in Computer Science at <a href="https://www.usc.edu/">University of Southern California</a></div>-->
-        <div class="py-2 pt-4">
-            <text class="text-lg text-justify">
-                Life is truly marvelous, especially when you chase and achieve your dreams.
-                Along the way, you may encounter a few <i>"bugs,"</i> but if you strive,
-                you may overcome them.
-                Just as in life, <b>Software Engineering</b> faces issues.
-                I derive immense satisfaction from resolving real-life challenges,
-                and I'm eager to discover innovative methods for detecting and
-                solving problems in the realm of Software Engineering as well.
-                <br>
-                <br>
-                I am a Ph.D. Student in <a href="https://www.cs.usc.edu/" class="text-blue-500">Computer
-                Science</a>
-                at the <a href="https://www.usc.edu/" class="text-blue-500">University of Southern California (USC)</a>,
-                supervised by Prof. <a href="https://viterbi-web.usc.edu/~halfond/" class="text-blue-500">William G.J.
-                Halfond</a> (currently on leave).
-                I received my bachelor's degree in 2018 from the
-                <a href="https://www.dept.aueb.gr/en/dmst" class="text-blue-500">Department of Management Science and
-                    Technology</a>
-                at the <a href="https://www.aueb.gr/en" class="text-blue-500">Athens University of Economics and
-                Business</a> in Greece.
-                In 2021, I finished a master's degree in
-                <a href="https://mscis.cs.aueb.gr/en/normal/home" class="text-blue-500">Information Systems</a>
-                at the same University.
-                During my studies, I started working in the industry as a Software Engineer.
-                My latest job position was Applied Scientist II at Amazon, located
-                in New York City, New York.
-            </text>
-            <br><br>
-            <text class="text-lg">
-                My research interests are in the areas of <b>Software Testing</b>, <b>Program Analysis</b>, and <b>Web
-                Services</b>.
-            </text>
+    <div class="pb-6 mt-5">
+        <h1 class="text-3xl font-bold">Hi, I’m Christina! <span class="bug-home"></span></h1>
+        <div class="home-introduction pt-4">
+            <p>I’m a Ph.D. student in Computer Science at the <a href="https://www.usc.edu/" class="text-blue-500">University of Southern California</a>, under the supervision of Prof. <a href="https://viterbi-web.usc.edu/~halfond/" class="text-blue-500">William G.J. Halfond</a>. </p>
+
+            <p>I’m curious about where software goes wrong—and how we can catch it before it does. My research interests include <b>software testing</b>, <b>program analysis</b>, <b>AI agents for security</b>, and <b>web services</b>, with the goal of making software more secure and reliable.
+            Beyond research, I’m a mom to little Ariadni, who keeps me curious in entirely new ways—and occasionally helps me explore research questions at unusual hours.</p>
+            <p>You can read more about my background in my <a class="text-blue-500" href="/CChaniotaki_CV.pdf">CV</a>.</p>
         </div>
     </div>
-
-    <div class="intro-bug"><Bug /></div>
-
     <div>
         <div class="text-3xl w-full font-bold mb-2">Latest updates</div>
     </div>
-    <div class="time-line-container grid gap-4 mb-10">
+    <div class="time-line-container original-timeline grid gap-4 mb-10">
         <TimeLineElement
                 university="September 2026"
                 subtitle="Benevento, Italy"
@@ -82,54 +49,54 @@ import TimeLineElement from "../components/cv/TimeLine.astro";
                 title="I got a scholarship from <a href='https://gerondelisfoundation.com/' class='text-blue-500'>Gerondelis Foundation</a>!"
         >
         </TimeLineElement>
-        <TimeLineElement
-                university="August 2024"
-                subtitle="Los Angeles, California"
-                title="I started working as a 25% Teaching Assistant for the course CSCI 530: Security Systems."
-        >
-        </TimeLineElement>
-        <TimeLineElement
-                university="March 2024"
-                subtitle="Los Angeles, California"
-                title="I had my first lecture in the course CSCI 310: Software Engineering about 'Security from Implementation Perspective'"
-        >
-        </TimeLineElement>
-        <TimeLineElement
-                university="January 2024"
-                subtitle="Los Angeles, California"
-                title="I started working as a part-time Teaching Assistant for the course CSCI 310: Software Engineering."
-        >
-        </TimeLineElement>
-        <TimeLineElement
-                university="August 2023"
-                subtitle="Los Angeles, California"
-                title="I started working as a part-time Teaching Assistant for the course CSCI 530: Security Systems."
-        >
-        </TimeLineElement>
-        <TimeLineElement
-                university="August 2023"
-                subtitle="Los Angeles, California"
-                title="I moved to Los Angeles to start my Ph.D. studies at USC."
-        >
-        </TimeLineElement>
-        <TimeLineElement
-                university="March 2023"
-                subtitle="Paris, France"
-                title="I started working on European Banking Authority (EBA)."
-        >
-        </TimeLineElement>
-        <TimeLineElement
-                university="June 2022"
-                subtitle="Athens, Greece"
-                title="I became a Team Leader - Senior Software Engineer at UBITECH LTD."
-        >
-        </TimeLineElement>
-        <TimeLineElement
-                university="December 2021"
-                subtitle="Athens, Greece"
-                title="I defended my master's thesis."
-        >
-        </TimeLineElement>
+        <!--<TimeLineElement-->
+        <!--        university="August 2024"-->
+        <!--        subtitle="Los Angeles, California"-->
+        <!--        title="I started working as a 25% Teaching Assistant for the course CSCI 530: Security Systems."-->
+        <!--&gt;-->
+        <!--</TimeLineElement>-->
+        <!--<TimeLineElement-->
+        <!--        university="March 2024"-->
+        <!--        subtitle="Los Angeles, California"-->
+        <!--        title="I had my first lecture in the course CSCI 310: Software Engineering about 'Security from Implementation Perspective'"-->
+        <!--&gt;-->
+        <!--</TimeLineElement>-->
+        <!--<TimeLineElement-->
+        <!--        university="January 2024"-->
+        <!--        subtitle="Los Angeles, California"-->
+        <!--        title="I started working as a part-time Teaching Assistant for the course CSCI 310: Software Engineering."-->
+        <!--&gt;-->
+        <!--</TimeLineElement>-->
+        <!--<TimeLineElement-->
+        <!--        university="August 2023"-->
+        <!--        subtitle="Los Angeles, California"-->
+        <!--        title="I started working as a part-time Teaching Assistant for the course CSCI 530: Security Systems."-->
+        <!--&gt;-->
+        <!--</TimeLineElement>-->
+        <!--<TimeLineElement-->
+        <!--        university="August 2023"-->
+        <!--        subtitle="Los Angeles, California"-->
+        <!--        title="I moved to Los Angeles to start my Ph.D. studies at USC."-->
+        <!--&gt;-->
+        <!--</TimeLineElement>-->
+        <!--<TimeLineElement-->
+        <!--        university="March 2023"-->
+        <!--        subtitle="Paris, France"-->
+        <!--        title="I started working on European Banking Authority (EBA)."-->
+        <!--&gt;-->
+        <!--</TimeLineElement>-->
+        <!--<TimeLineElement-->
+        <!--        university="June 2022"-->
+        <!--        subtitle="Athens, Greece"-->
+        <!--        title="I became a Team Leader - Senior Software Engineer at UBITECH LTD."-->
+        <!--&gt;-->
+        <!--</TimeLineElement>-->
+        <!--<TimeLineElement-->
+        <!--        university="December 2021"-->
+        <!--        subtitle="Athens, Greece"-->
+        <!--        title="I defended my master's thesis."-->
+        <!--&gt;-->
+        <!--</TimeLineElement>-->
     </div>
 
 </BaseLayout>

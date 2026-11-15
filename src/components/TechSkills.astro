@@ -9,17 +9,29 @@ const icons: Record<string, string> = {
   'Figma (Software)':'figma', 'Vue.js':'vuejs', 'Angular':'angular',
   'Elasticsearch':'elasticsearch', 'MongoDB':'mongodb', 'CSS':'css3', 'HTML5':'html5',
   'Spring Boot':'spring', 'Ionic Framework':'ionic', 'Electron.js':'electron',
-  'WordPress':'wordpress', 'MySQL':'mysql'
+  'WordPress':'wordpress', 'MySQL':'mysql', 'Solr':'solr', 'solr':'solr', 'Apache Solr':'solr', 'Minio':'minio', 'MinIO':'minio', 'minio':'minio'
 };
+const items = [...new Set(skills.split('·').map(value => value.trim()).filter(Boolean))];
+const omitted = new Set(['Teamwork', 'Algorithms', 'Web Development', 'Mean Stack', 'MEAN Stack']);
+const technologyItems = items.filter(skill => icons[skill]);
+const focusItems = items.filter(skill => !icons[skill] && !omitted.has(skill) && skill !== 'Team Leadership');
+const leadership = items.includes('Team Leadership');
 ---
-<ul class="tech-skills" aria-label="Technologies and skills">
-  {skills.split('·').map(value => value.trim()).filter(Boolean).map(skill => (
-    <li class:list={['tech-skill', { 'tech-logo': icons[skill] }]} title={skill}>
-      {icons[skill] ? <><img src={`/icons/${icons[skill]}.svg`} alt={skill} width="25" height="25" loading="lazy" /><span class="tech-tooltip" aria-hidden="true">{skill}</span></> : <span>{skill}</span>}
+{leadership && <p class="project-role">Team Leadership</p>}
+{focusItems.length > 0 && <p class="project-focus"><span>Focus:</span> {focusItems.join(' · ')}</p>}
+{technologyItems.length > 0 && <ul class="tech-skills" aria-label="Technologies">
+  {technologyItems.map(skill => (
+    <li class="tech-skill tech-logo" title={skill}>
+      <img src={`/icons/${icons[skill]}.svg`} alt={skill} width="25" height="25" loading="lazy" />
+      <span class="tech-tooltip" aria-hidden="true">{skill}</span>
     </li>
   ))}
-</ul>
+</ul>}
 <style>
+.project-focus { margin:12px 0 0; color:var(--muted); font-size:12px; line-height:1.7; }
+.project-focus > span { color:var(--ink); font-weight:500; }
+.project-role { margin:12px 0 0; color:var(--accent); font-size:11px; font-weight:500; }
+
 .tech-skills { display:flex; flex-wrap:wrap; align-items:center; gap:9px; margin:16px 0 0; padding:0; list-style:none; }
 .tech-skill { position:relative; display:flex; align-items:center; justify-content:center; min-height:36px; padding:4px 9px; border:1px solid var(--line); border-radius:7px; font-size:11px; line-height:1.5; color:var(--muted); background:var(--paper); }
 .tech-logo { width:38px; padding:6px; background:transparent; border-color:var(--line); }

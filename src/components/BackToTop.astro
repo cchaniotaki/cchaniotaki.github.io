@@ -1,0 +1,8 @@
+<button class="back-to-top" type="button" aria-label="Back to top" hidden>↑ <span>Back to top</span></button>
+<script>
+  const button = document.querySelector<HTMLButtonElement>('.back-to-top')!;
+  function update() { button.hidden = scrollY < 600; }
+  window.addEventListener('scroll',update,{passive:true});
+  button.addEventListener('click',()=>{ window.scrollTo({top:0,behavior:matchMedia('(prefers-reduced-motion: reduce)').matches?'instant':'smooth'}); document.querySelector<HTMLElement>('.skip-link')?.focus({preventScroll:true}); });
+  update();
+</script>

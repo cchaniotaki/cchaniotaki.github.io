@@ -1,105 +1,37 @@
 ---
 import BaseLayout from "../layouts/BaseLayout.astro";
-import HorizontalCard from "../components/HorizontalCard.astro";
 ---
 
-<BaseLayout title="Projects" sideBarActiveItemID="research">
+<BaseLayout title="Publications" sideBarActiveItemID="research">
     <div>
-        <div class="text-3xl w-full font-bold mb-5">Publications</div>
+        <div class="text-3xl w-full font-bold mb-5">Publications </div>
     </div>
 
-    <ul class="list-disc mx-6 mb-10 grid gap-2">
-        <li>
-            <b>C. Z. Chaniotaki</b>, P. T. Chiou, W. G.J. Halfond.
-            <i><a class="text-blue-400" href="/Assessing_the_User_Interaction_Cost_of_Keyboard_Navigation_in_Web_Applications.pdf" target="_blank">“Assessing the User Interaction Cost of Keyboard Navigation in Web Applications.“</a></i>
-            Early Acceptance (6%) at the <a class="text-blue-400" href="https://conf.researchr.org/home/icsme-2026" target="_blank">
-            International Conference on Software Maintenance and Evolution (ICSME 2026)</a>, <span
-                class="italic">(Sept 2026).</span> <a class="text-blue-400" href="/Assesing the User Interaction Cost of Keyboard Navigation in Web Applications ICSME_26.pdf" target="_blank">Presentation Slides</a>.
-        </li>
-        <li>
-            N.D. Sakkas, S. Yfanti, P. Shah, N. Sakkas, <b>C. Chaniotakis</b>,
-            C. Daskalakis, M. Domnich, E. Barbu.
-            <i><a class="text-blue-400" href="https://www.mdpi.com/1996-1073/16/20/7210" target="_blank">“Explainable approaches for forecasting building electricity consumption.“</a></i>
-            Accepted at <a class="text-blue-400" href="https://www.mdpi.com/journal/energies" target="_blank">
-            Multidisciplinary Digital Publishing Institute (MDPI) - Energies</a>, <span
-                class="italic">(Sept 2023).</span>
-        </li>
-        <li>
-            N. Sakkas, <b>C. Chaniotaki</b>, N. Sakkas, C. Daskalakis.
-            <i><a class="text-blue-400" href="https://iopscience.iop.org/article/10.1088/1755-1315/1122/1/012066/pdf" target="_blank">“Building data models and data sharing. Purpose, approaches, and a case study on explainable demand
-                response.“</a></i>
-            Published at
-            <a class="text-blue-400" href="https://iopscience.iop.org/article/10.1088/1755-1315/1122/1/012066/meta"
-               target="_blank">
-                Emerging Concepts for Sustainable Built Environments (SBEFIN)</a>, <span class="italic">(Nov 2022).</span>
-        </li>
-        <li>
-            <b>C. Chaniotaki</b>, P. Prodromidis.
-            <i> <a class="text-blue-400"
-                   href="/The_trade_sector_and_regions_that_displayed_an_increase_in_employment_during_the_recession_(2008-2015).pdf"
-                   target="_blank">“The trade sector and regions that displayed an increase in employment during the recession
-                (2008-2015).“</a></i>
-            Presented at the
-            <a class="text-blue-400"
+    <ul class="publication-list">
+<li class="publication-entry"><h2 class="publication-title"><b>Assessing the User Interaction Cost of Keyboard Navigation in Web Applications</b></h2><div class="publication-authors"><b>C. Z. Chaniotaki</b>, P. T. Chiou, W. G.J. Halfond.</div><div class="publication-meta"><a class="publication-venue" href="https://dl.acm.org/doi/10.1145/3611643.3616367" target="_blank"
+               rel="noopener noreferrer">ICSME 2026</a> · Early Acceptance (6%)</div><div class="publication-links"><a class="publication-link"
+               href="/Assessing_the_User_Interaction_Cost_of_Keyboard_Navigation_in_Web_Applications.pdf"
+               target="_blank" rel="noopener noreferrer">Paper</a>
+            <a class="publication-link"
+               href="/Assesing the User Interaction Cost of Keyboard Navigation in Web Applications ICSME_26.pdf"
+               target="_blank" rel="noopener noreferrer">Slides</a>
+            <a class="publication-link" href="https://github.com/USC-SQL/krawler" target="_blank" rel="noopener noreferrer">Code</a></div></li>
+<li class="publication-entry"><h2 class="publication-title"><b>Explainable approaches for forecasting building electricity consumption</b></h2><div class="publication-authors">N.D. Sakkas, S. Yfanti, P. Shah, N. Sakkas, <b>C. Chaniotakis</b>, C. Daskalakis, M. Domnich, E. Barbu.</div><div class="publication-meta"><a class="publication-venue" href="https://www.mdpi.com/journal/energies" target="_blank"
+               rel="noopener noreferrer">MDPI 2023</a></div><div class="publication-links"><a class="publication-link" href="https://www.mdpi.com/1996-1073/16/20/7210" target="_blank"
+               rel="noopener noreferrer">Paper</a></div></li>
+<li class="publication-entry"><h2 class="publication-title"><b>Building data models and data sharing. Purpose, approaches, and a case study on explainable demand
+                response</b></h2><div class="publication-authors">N. Sakkas, <b>C. Chaniotaki</b>, N. Sakkas, C. Daskalakis.</div><div class="publication-meta"><a class="publication-venue" href="https://iopscience.iop.org/article/10.1088/1755-1315/1122/1/012066/meta"
+               target="_blank" rel="noopener noreferrer">SBEFIN 2022</a></div><div class="publication-links"><a class="publication-link" href="https://iopscience.iop.org/article/10.1088/1755-1315/1122/1/012066/pdf"
+               target="_blank" rel="noopener noreferrer">Paper</a></div></li>
+<li class="publication-entry"><h2 class="publication-title"><b>The trade sector and regions that displayed an increase in employment during the recession
+                (2008-2015)</b></h2><div class="publication-authors"><b>C. Chaniotaki</b>, P. Prodromidis.</div><div class="publication-meta"><a class="publication-venue"
                href="http://doeptm.aua.gr/wp-content/uploads/2016/05/Πρόγραμμα_19ο-Επιστημονικό-Συνέδριο-ΣΕΠ_Λαμία_20160512.pdf"
-               target="_blank">
-                19th Scientific Conference of the Association of Greek Regionalists</a>, <span
-                class="italic">(May 2016).</span>
-        </li>
-        <li>
-            P. Lappas, E. Kritikos, <b>C. Chaniotaki</b>, C.T. Lardopoulou, and A. Gotsi.
-            “An Educational Scenario in the context of Scientific Process: Numerical Solution of Equations
-            and Systems of Equations using Cognitive Tools.“ Presented at the 12th DMST Student Conference,
-            <span class="italic">(May 2015).</span>
-        </li>
+               target="_blank" rel="noopener noreferrer">19th Scientific Conference of the Association of Greek
+                Regionalists 2016</a></div><div class="publication-links"><a class="publication-link"
+               href="/The_trade_sector_and_regions_that_displayed_an_increase_in_employment_during_the_recession_(2008-2015).pdf"
+               target="_blank" rel="noopener noreferrer">Paper</a></div></li>
+<li class="publication-entry"><h2 class="publication-title"><b>An Educational Scenario in the context of Scientific Process: Numerical Solution of Equations
+                and Systems of Equations using Cognitive Tools</b></h2><div class="publication-authors">P. Lappas, E. Kritikos, <b>C. Chaniotaki</b>, C.T. Lardopoulou, and A. Gotsi.</div><div class="publication-meta"><span class="publication-venue">12th DMST Student Conference 2015</span></div><div class="publication-links"></div></li>
     </ul>
-
-    <div class="divider my-5"></div>
-    <div>
-        <div class="text-3xl w-full font-bold mb-5">Master's Thesis</div>
-    </div>
-
-    <a class="text-blue-400 text-xl" href="http://www.pyxida.aueb.gr/index.php?op=view_object&object_id=9089"
-       target="_blank"><b>An Empirical Investigation of Boilerplate Code</b></a><br>
-    <span class="font-light text-sm">Mar 2021 - Dec 2021</span><br>
-    Investigation of the reasons for using boilerplate code. It includes an examination of previous research,
-    tool-based code analysis, and a questionnaire survey.
-    <br>
-    Participants: Aggeliki Papadopoulou, George Liargovas, Zoe Kotti
-    <br>
-    Supervisor: Prof. Diomidis Spinellis
-
-    <div class="divider my-5"></div>
-    <div>
-        <div class="text-3xl w-full font-bold mb-5">Bachelor's Thesis</div>
-    </div>
-
-    <a class="text-blue-400 text-xl" href="/DNA.pdf"
-       target="_blank">
-        <b>DNA – Distributed Network Architecture</b></a><br>
-    <span class="font-light text-sm">Jun 2017 - Apr 2018</span><br>
-    <p class="pt-1"> Development of a Distributed Network that uses Android Smartphones to run server-side
-    NodeJS code or plain Javascript Scripts.
-    A library for Android applications, an API that handles all the jobs and a GUI for the users designed, implemented
-    and developed. Co-authored with Konstantinos Kopanidis.
-    <br>
-        Supervisors: Prof. Panos Louridas, Prof. George Xylomenos and Prof. Dimitris Mitropoulos.</p>
-
-
-    <div class="divider my-5"></div>
-    <div>
-        <div class="text-3xl w-full font-bold mb-5">Academic Projects</div>
-    </div>
-
-    <a class="text-blue-400 text-xl" href="https://github.com/Christina96/google-calendar-alexa-skill"
-       target="_blank"><b>Google Calendar Alexa Skill</b></a><br>
-    <span class="font-light text-sm">Apr 2017 - Jan 2018</span><br>
-    <p class="pt-1"> An Alexa Skill for Amazon Echo by using Flask-Ask.
-        With this skill you can connect your Public Google Calendar with your Amazon Echo and listen all your reminders
-        or reminders for a specific day.
-        <br>
-        <i>Presented at Student Conference of the Department of Management Science and Technology, Athens University of
-        Economics, Athens.</i></p>
-
 
 </BaseLayout>

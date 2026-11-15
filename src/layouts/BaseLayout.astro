@@ -1,27 +1,117 @@
 ---
 import BaseHead from "../components/BaseHead.astro";
+import BackToTop from "../components/BackToTop.astro";
 import Footer from "../components/Footer.astro";
 import SideBarFooter from "../components/SideBarFooter.astro";
-import { SITE_TITLE, SITE_DESCRIPTION } from "../config";
-const { image, title = SITE_TITLE, description = SITE_DESCRIPTION, sideBarActiveItemID } = Astro.props;
-const links = [['home','/','About'],['projects','/projects','Work Projects'],['research','/research','Research Projects'],['teaching','/teaching','Teaching Experience'],['cv','/cv','Curriculum Vitae (CV)'],['contact','/contact','Contact']];
+import {SITE_TITLE, SITE_DESCRIPTION} from "../config";
+const {image, title = SITE_TITLE, description = SITE_DESCRIPTION, sideBarActiveItemID} = Astro.props;
+const links = [
+    ['home', '/', 'Home'],
+    ['bio', '/bio', 'Bio'],
+    ['research', '/research', 'Publications'],
+    ['projects', '/projects', 'Professional Projects'],
+    ['teaching', '/teaching', 'Teaching Experience'],
+    // ['academic', '/academic-projects', 'Academic Projects'],
+    // ['cv', '/cv', 'Curriculum Vitae (CV)'],
+    ['cv', '/CChaniotaki_CV.pdf', 'Curriculum Vitae (CV)']];
+// ['contact', '/contact', 'Contact']];
 ---
 <!DOCTYPE html>
-<html lang="en" data-theme="light">
-  <head><BaseHead title={title} description={description} image={image} /></head>
-  <body>
-    <div class="space-backdrop" aria-hidden="true"><span class="space-orbit"></span></div>
-    <a class="skip-link" href="#main">Skip to content</a>
-    <div class="site-shell">
-      <aside class="profile-panel">
-        <a href="/" class="portrait-link"><img src="/profile.png" alt="Christina Chaniotaki" width="176" height="176" /></a>
+<html lang="en" data-theme="dark">
+<head>
+    <BaseHead title={title} description={description} image={image}/>
+</head>
+<body>
+<div class="space-backdrop" aria-hidden="true"><span class="space-orbit"></span></div>
+<a class="skip-link" href="#main">Skip to content</a>
+<header class="mobile-menu-bar">
+    <button type="button" class="mobile-menu-open" aria-haspopup="dialog" aria-controls="mobile-navigation"
+            aria-expanded="false" aria-label="Open menu"><span aria-hidden="true">☰</span></button>
+    <a href="/">Christina Chaniotaki</a></header>
+<dialog id="mobile-navigation" aria-label="Navigation">
+    <button class="mobile-menu-close" type="button" aria-label="Close menu">✕</button>
+</dialog>
+<div class="site-shell">
+    <aside class="profile-panel">
+        <a href="/" class="portrait-link"><img src="/profile.png" alt="Christina Chaniotaki" width="176" height="176"/></a>
         <div class="profile-name">Christina Chaniotaki</div>
-        <div class="profile-quotes"><i>"Αγωνίσου για την ζωή που ονειρεύεσαι"</i><br /><i>"Strive for the life you dream of"</i></div>
-        <nav aria-label="Main navigation">{links.map(([id,href,label]) => <a href={href} aria-current={id === sideBarActiveItemID ? 'page' : undefined}><span>{label}</span><span aria-hidden="true">↗</span></a>)}</nav>
-        <SideBarFooter />
-      </aside>
-      <main id="main" class="page-content"><slot /></main>
-    </div>
-    <Footer />
-  </body>
+        <div class="profile-quotes">
+            <!--<span class="quote-trigger" tabindex="0" aria-describedby="quote-translation" lang="el">-->
+            <!--    Αγωνίσου για την ζωή που ονειρεύεσαι</span>-->
+            <!--<span id="quote-translation" class="quote-translation" role="tooltip" lang="en">-->
+            <!--    Strive for the life you dream of-->
+            <!--</span>-->
+        </div>
+        <nav aria-label="Main navigation">{links.map(([id, href, label]) => <a href={href}
+                                                                               aria-current={id === sideBarActiveItemID ? 'page' : undefined}><span>{label}</span><span
+                aria-hidden="true"></span></a>)}</nav>
+        <SideBarFooter/>
+    </aside>
+    <main id="main" class:list={["page-content", {
+        "about-page": sideBarActiveItemID === "home",
+        "compact-reading": ["teaching", "research", "academic"].includes(sideBarActiveItemID)
+    }]}>
+        <slot/>
+    </main>
+</div>
+<BackToTop/>
+<Footer showBug={true}/>
+<script>
+    const dialog = document.querySelector<HTMLDialogElement>('#mobile-navigation')!;
+    const panel = document.querySelector<HTMLElement>('.profile-panel')!;
+    const opener = document.querySelector<HTMLButtonElement>('.mobile-menu-open')!;
+    const closer = dialog.querySelector<HTMLButtonElement>('.mobile-menu-close')!;
+    const anchor = document.createComment('Sidebar position');
+    panel.before(anchor);
+    const mobile = matchMedia('(max-width:700px)');
+    let closingTimer: ReturnType<typeof setTimeout>;
+
+    function finishClose() {
+        clearTimeout(closingTimer);
+        dialog.close();
+        dialog.classList.remove('is-closing');
+        opener.setAttribute('aria-expanded', 'false');
+        document.body.classList.remove('menu-is-open');
+    }
+
+    function closeMenu() {
+        if (!dialog.open || dialog.classList.contains('is-closing')) return;
+        if (matchMedia('(prefers-reduced-motion: reduce)').matches) {
+            finishClose();
+            return;
+        }
+        dialog.classList.add('is-closing');
+        closingTimer = setTimeout(finishClose, 500);
+    }
+
+    function layout() {
+        finishClose();
+        if (mobile.matches) dialog.append(panel);
+        else anchor.after(panel);
+    }
+
+    opener.addEventListener('click', () => {
+        clearTimeout(closingTimer);
+        dialog.classList.remove('is-closing');
+        dialog.showModal();
+        opener.setAttribute('aria-expanded', 'true');
+        document.body.classList.add('menu-is-open');
+    });
+    closer.addEventListener('click', closeMenu);
+    dialog.addEventListener('cancel', event => {
+        event.preventDefault();
+        closeMenu();
+    });
+    dialog.addEventListener('close', () => {
+        opener.setAttribute('aria-expanded', 'false');
+        document.body.classList.remove('menu-is-open');
+    });
+    dialog.addEventListener('click', event => {
+        const r = dialog.getBoundingClientRect();
+        if (event.clientX < r.left || event.clientX > r.right || event.clientY < r.top || event.clientY > r.bottom) closeMenu();
+    });
+    mobile.addEventListener('change', layout);
+    layout();
+</script>
+</body>
 </html>
